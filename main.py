@@ -6,7 +6,8 @@ duracion_grabacion = float(input("Ingresa la duración de la grabación en segun
 nombre_archivo = input("Ingresa el nombre del archivo de salida (sin la extensión .wav): ")
 grabar.grabar_audio(duracion_grabacion, nombre_archivo)
 
-# Para dividir audio
-nombre_archivo_audio = input("Ingresa el nombre del archivo de audio a dividir (con la extensión .wav): ")
+# Para dividir audio5
+nombre_archivo_audio = nombre_archivo + ".wav"
 CortarGrabacion.dividir_audio(nombre_archivo_audio)
+
 

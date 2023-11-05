@@ -5,7 +5,7 @@ def dividir_audio(nombre_archivo_audio):
     # Combinar el nombre del archivo con la ruta al escritorio
     ruta_archivo_audio = os.path.join(os.path.expanduser("~"), "Desktop", nombre_archivo_audio)
 
-    duracion_segmento = 5   # 5 minutos en milisegundos
+    duracion_segmento = 1000  # 5 minutos en milisegundos
     audio = AudioSegment.from_file(ruta_archivo_audio)
 
     segmentos = []
