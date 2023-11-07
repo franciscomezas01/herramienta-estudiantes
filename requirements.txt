@@ -1,0 +1,4 @@
+pip install SpeechRecognition python-docx
+pip install pyaudio
+pip install ydub
+pip install openai
