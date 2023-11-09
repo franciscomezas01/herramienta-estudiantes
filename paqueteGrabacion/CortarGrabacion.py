@@ -14,7 +14,7 @@ def dividir_audio(nombre_archivo_audio, nombre_carpeta_destino):
         segmentos.append(segmento)
 
     for i, segmento in enumerate(segmentos):
-        nombre_archivo_segmento = f"{nombre_archivo_audio} {i + 1}.wav"
+        nombre_archivo_segmento = f"{nombre_archivo_audio.replace('.wav' , '') } parte_{i + 1}.wav"
         ruta_completa_segmento = os.path.join(nombre_carpeta_destino, nombre_archivo_segmento)
         segmento.export(ruta_completa_segmento, format="wav")
 
