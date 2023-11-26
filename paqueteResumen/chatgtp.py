@@ -1,19 +1,18 @@
 import openai
 # Define tu clave de API
-api_key = "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"
+openai.api_key  = "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"
 
-# Inicializa el cliente de OpenAI con tu clave de API
-openai.api_key = api_key
+prompt = 'Cuéntame una historia sobre robots'
 
-# Definir el mensaje inicial
-mensaje_inicial = "Cuéntame una historia sobre gatos."
-
-# Llamar a la API de ChatGPT para generar una respuesta
-respuesta = openai.Completion.create(
-    engine="text-davinci-002",
-    prompt=mensaje_inicial,
-    max_tokens=50  # Número máximo de tokens en la respuesta
+# Hacer la solicitud a la API
+response = openai.Completion.create(
+  engine="text-davinci-003",  # Puedes probar otros motores también
+  prompt=prompt,
+  max_tokens=150  # Puedes ajustar este valor según tus necesidades
 )
 
-# Imprimir la respuesta generada
-print(respuesta.choices[0].text)
+# Obtener la respuesta generada por el modelo
+generated_text = response.choices[0].text.strip()
+
+# Imprimir la respuesta
+print(generated_text)
