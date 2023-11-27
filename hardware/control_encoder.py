@@ -3,9 +3,9 @@ import time
 import keyboard
 
 # Configuración de pines
-PIN_A = 17
-PIN_B = 18
-PIN_BUTTON = 27
+PIN_A = 3
+PIN_B = 2
+PIN_BUTTON = 0
 
 # Configuración de pines como entrada
 pin_a = Pin(PIN_A, Pin.IN)
