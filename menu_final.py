@@ -8,6 +8,7 @@ import time
 import keyboard
 from docx import Document
 import pyaudio 
+import openai 
 
 def obtener_texto_por_voz(mensaje):
     recognizer = sr.Recognizer()
@@ -105,6 +106,25 @@ def dividir_audio(nombre_archivo_audio, nombre_carpeta_destino):
 
     print(f"El archivo de audio se ha dividido en {len(segmentos)} segmentos de 5 minutos cada uno y se han guardado en {nombre_carpeta_destino}.")
 
+# Define tu clave de API de OpenAI
+openai.api_key = "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"
+
+def obtener_resumen_por_gpt3(texto):
+    # Define el prompt para GPT-3
+    prompt = f"Resumen del contenido del audio:\n{texto}"
+
+    # Hacer la solicitud a la API
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=150
+    )
+
+    # Obtener la respuesta generada por el modelo
+    resumen_generado = response.choices[0].text.strip()
+
+    return resumen_generado
+
 def convertir_audio_a_texto(nombre_carpeta, nombre_archivo_audio):
     ruta_archivo_audio = os.path.join(nombre_carpeta, f"{nombre_archivo_audio}.wav")
 
@@ -120,16 +140,27 @@ def convertir_audio_a_texto(nombre_carpeta, nombre_archivo_audio):
     except sr.RequestError:
         texto = "No se pudo procesar la solicitud de reconocimiento de voz."
 
+    # Guardar el texto en un archivo de texto (.txt)
     ruta_archivo_txt = os.path.join(nombre_carpeta, f"{nombre_archivo_audio}.txt")
     with open(ruta_archivo_txt, "w") as txt_file:
         txt_file.write(texto)
 
+    # Guardar el texto en un archivo de Word (.docx)
     ruta_archivo_docx = os.path.join(nombre_carpeta, f"{nombre_archivo_audio}.docx")
     doc = Document()
     doc.add_paragraph(texto)
     doc.save(ruta_archivo_docx)
 
-    return ruta_archivo_txt, ruta_archivo_docx
+    # Obtener resumen de GPT-3
+    resumen_generado = obtener_resumen_por_gpt3(texto)
+
+    # Guardar el resumen en un archivo de Word (.docx)
+    ruta_archivo_resumen_docx = os.path.join(nombre_carpeta, f"{nombre_archivo_audio}_resumen.docx")
+    doc_resumen = Document()
+    doc_resumen.add_paragraph(resumen_generado)
+    doc_resumen.save(ruta_archivo_resumen_docx)
+
+    return ruta_archivo_txt, ruta_archivo_docx, ruta_archivo_resumen_docx
 
 # Configuración de pines
 PIN_A = 3
